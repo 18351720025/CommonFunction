@@ -3,5 +3,9 @@
 ################################################################################
 
 /.vs
-/FileHelper/.vs/FileHelper
+/FileHelper/.vs
 /FileHelper/Debug
+/FileHelper/obj
+/SemiCutHelper/.vs
+/SemiCutHelper/Debug
+/SemiCutHelper/obj
