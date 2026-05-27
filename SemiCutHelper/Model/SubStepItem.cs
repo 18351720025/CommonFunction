@@ -1,15 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Numerics;
+using System.Linq;
 using System.Text;
 
 namespace SemiCutHelper.Model
 {
     /// <summary>
-    /// 切割子指令项：定义单次行程（Pass）的具体运动参数与工艺参数
+    /// 切割子指令项：定义单次行程（Pass）的具体运动参数与工艺参数。
+    /// 一个 SubStep 是切割的最小执行单元，描述一次完整的"快速趋近 → 切割 → 退刀"动作。
     /// </summary>
     public class SubStepItem
     {
+        /// <summary>
+        /// 子步骤在当前 CommandItem 内的唯一编号 (0-based)
+        /// </summary>
+        public int Id { get; set; } = 0;
 
         #region 运动轨迹与位置 (Motion Trajectory & Positioning)
 
@@ -76,6 +81,15 @@ namespace SemiCutHelper.Model
         /// 步骤执行状态
         /// </summary>
         public CutCommandStatus Status { get; set; } = CutCommandStatus.Pending;
+
+        #endregion
+
+        #region 计算属性
+
+        /// <summary>
+        /// 实际切割行程长度 (入刀 → 出刀)
+        /// </summary>
+        public double CutStrokeLength => Math.Abs(CutExitX - CutEntryX);
 
         #endregion
     }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SemiCutHelper.Model.Enum
+namespace SemiCutHelper.Model.Enums
 {
     public enum WaferType:int
     {

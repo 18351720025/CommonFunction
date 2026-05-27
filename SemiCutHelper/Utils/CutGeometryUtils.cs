@@ -1,5 +1,5 @@
 ﻿using SemiCutHelper.Model;
-using SemiCutHelper.Model.Enum;
+using SemiCutHelper.Model.Enums;
 using System.Buffers;
 using System.Runtime.InteropServices;
 using System.Runtime.CompilerServices; // 引入内联命名空间
@@ -300,20 +300,20 @@ namespace SemiCutHelper.Utils
                 if (hasFlat)
                 {
                     // 极致优化：flatLength / 2.0 * (flatLength / 2.0) -> flatLength * flatLength * 0.25
-                    double flatY = Math.Sqrt(radius * radius - flatLength * flatLength * 0.25);
+                    double flatX = Math.Sqrt(radius * radius - flatLength * flatLength * 0.25);
                     double absAngle = Math.Abs(angle);
                     double absAngle90 = Math.Abs(angle - 90.0);
 
                     if ((absAngle <= 45 && flatDirection == Direction.POSITIVE_X) ||
                         (absAngle90 <= 45 && flatDirection == Direction.POSITIVE_Y))
                     {
-                        double endX = center.X + flatY;
+                        double endX = center.X + flatX;
                         if (cutLine.CutExitX > endX) cutLine.CutExitX = endX;
                     }
                     else if ((absAngle <= 45 && flatDirection == Direction.NEGATIVE_X) ||
                              (absAngle90 <= 45 && flatDirection == Direction.NEGATIVE_Y))
                     {
-                        double startX = center.X - flatY;
+                        double startX = center.X - flatX;
                         if (cutLine.CutEntryX < startX) cutLine.CutEntryX = startX;
                     }
                 }

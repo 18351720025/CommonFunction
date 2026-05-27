@@ -1,15 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Numerics;
+using System.Linq;
 using System.Text;
 
 namespace SemiCutHelper.Model
 {
     /// <summary>
-    /// 切割指令项：定义单条切割任务的具体执行参数与校验逻辑
+    /// 切割指令项：定义单条切割任务的具体执行参数与校验逻辑。
+    /// 一个 CutCommandItem 关联一条 CutLine，包含完成该切割所需的所有运动子步骤。
     /// </summary>
     public class CutCommandItem
     {
+        /// <summary>
+        /// 指令项在当前 Command 内的唯一编号 (0-based)
+        /// </summary>
+        public int Id { get; set; } = 0;
+
         /// <summary>
         /// 关联的物理切割线定义 ID
         /// </summary>
@@ -75,6 +81,26 @@ namespace SemiCutHelper.Model
         /// 当前指令项的执行状态
         /// </summary>
         public CutCommandStatus Status { get; set; } = CutCommandStatus.Pending;
+
+        #endregion
+
+        #region 便捷方法
+
+        /// <summary>
+        /// 获取所有待执行的子步骤
+        /// </summary>
+        public IEnumerable<SubStepItem> GetPendingSubSteps()
+        {
+            return SubSteps.Where(s => s.Status == CutCommandStatus.Pending);
+        }
+
+        /// <summary>
+        /// 判断该指令项是否全部子步骤完成
+        /// </summary>
+        public bool IsAllSubStepsCompleted()
+        {
+            return SubSteps.Count > 0 && SubSteps.All(s => s.Status == CutCommandStatus.Completed);
+        }
 
         #endregion
     }
